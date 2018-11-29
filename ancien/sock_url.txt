@@ -1,0 +1,208 @@
+http://vidalc.chez.com/lf/socket.html
+http://www.cplusplus.com/reference/string/string/replace/
+http://www.cplusplus.com/reference/string/string/find/
+http://www.cplusplus.com/reference/string/string/data/
+http://www.cplusplus.com/reference/string/string/substr/
+http://www.cplusplus.com/reference/string/string/find_first_of/
+
+
+pout le buffer.
+sprintf(buffer, "%.4s", your_string.c_str());
+
+
+example #1
+// strings and c-strings
+#include <iostream>
+#include <cstring>
+#include <string>
+
+int main ()
+{
+  std::string str ("Please split this sentence into tokens");
+
+  char * cstr = new char [str.length()+1];
+  std::strcpy (cstr, str.c_str());
+
+  // cstr now contains a c-string copy of str
+
+  char * p = std::strtok (cstr," ");
+  while (p!=0)
+  {
+    std::cout << p << '\n';
+    p = std::strtok(NULL," ");
+  }
+
+  delete[] cstr;
+  return 0;
+}
+
+
+#res
+Please
+split
+this
+sentence
+into
+tokens
+
+
+
+#example 2
+#include <iostream>       // std::cout
+#include <string>         // std::string
+#include <cstddef>        // std::size_t
+
+int main ()
+{
+  std::string str ("user.0.zone.01001010010");
+  std::size_t found = str.find_first_of(".");//
+  
+  while (found!=std::string::npos)
+  {
+    str[found]=' ';
+    found=str.find_first_of(".",found+1);
+  }
+  
+
+  std::cout << str << '\n';
+
+  return 0;
+}
+#res
+user 0 zone 01001010010
+
+#example 3
+// string::substr
+#include <iostream>
+#include <string>
+
+int main ()
+{
+  std::string str="We think in generalities, but we live in details.";
+                                           // (quoting Alfred N. Whitehead)
+
+  std::string str2 = str.substr (3,5);     // "think"
+
+  std::size_t pos = str.find(" ");      // position of "live" in str
+
+  std::string str3 = str.substr (pos);     // get from "live" to the end
+
+  std::cout << str2 << ' ' << str3 << '\n' << pos << '\n';
+
+  return 0;
+}
+
+#res
+think  think in generalities, but we live in details.
+2
+
+
+#example 4
+// string::copy
+#include <iostream>
+#include <string>
+
+int main ()
+{
+  char buffer[20];
+  std::string str ("user.0.zone.01011101");
+  std::size_t length = str.copy(buffer,1,5);
+  buffer[length]='\0';
+  std::cout << "user is " << buffer[0] << '\n';
+  return 0;
+}
+#res
+user is 0
+
+
+
+example #5 <--Perfect match
+#include <iostream>
+#include <stdio.h>
+#include <string.h>
+using namespace std;
+
+int main() {
+	char string[]=  "user.0.zone.01001101";
+    char *array[4];
+    int i=0;
+
+array[i] = strtok(string,".");
+
+    while(array[i]!=NULL)
+                {
+         array[++i] = strtok(NULL,".");
+         cout << array[i-1] <<endl;
+         
+        }
+        
+    
+	return 0;
+}
+
+
+
+#res
+user
+0
+zone
+01001101
+
+
+exemple #6
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int main()
+{
+    stringstream ss("user.0.zone.01001101"); 
+   
+    vector<string> result;
+
+    while( ss.good() )
+    {
+    string substr;
+    getline( ss, substr, '.' );
+    result.push_back( substr );
+    }
+     for (int i=0; i< result.size(); i++)
+        cout << result.at(i)<<endl;
+}
+
+#res 
+user
+0
+zone
+01001101
+
+
+
+#passage par ref
+#include <string>
+#include <iostream>
+#include <vector>
+
+using namespace std;
+void foo1(int *arr) { cout << sizeof(arr) << '\n'; 
+    cout<<arr[2]<<endl;
+}
+void foo2(int arr[]) { cout << sizeof(arr) << '\n'; }
+void foo3(int arr[10]) { cout << sizeof(arr) << '\n'; }
+void foo4(int (&arr)[10]) { cout << sizeof(arr) << '\n';
+}
+
+int main()
+{
+    int arr[10] = {1, 2, 69, 4, 5, 6, 7, 8, 9, 10};
+    foo1(arr);
+    foo2(arr);
+    foo3(arr);
+    foo4(arr);
+}
+
+
+ 
