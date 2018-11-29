@@ -1,0 +1,15 @@
+root@raspberrypi:/home/pi/Desktop/test# ./server
+[+]Client Socket est crée.
+[+]Bind vers le port 4441
+[+]En Ecoute....
+[+]Connexion accepter de 192.168.0.157:57158
+111
+u.5.z.11000011.v.05.f.02.play
+
+[+]Connexion accepter de 192.168.0.157:55431
+111
+v.08
+
+[+]Connexion accepter de 192.168.0.157:35780
+111
+f.07
